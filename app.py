@@ -459,8 +459,4 @@ Category: <b>{predicted_cat}</b>
                 """, unsafe_allow_html=True)
                 st.progress(prob)
 
-st.markdown("""
-<div class="footer">
-    FAQ Classifier App | Parameter-Efficient Fine-Tuning using Hugging Face PEFT/LoRA & Streamlit
-</div>
-""", unsafe_allow_html=True)
+
