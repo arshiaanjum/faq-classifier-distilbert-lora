@@ -154,6 +154,50 @@ st.markdown("""
         .answer-card { padding: 18px; }
         h1 { font-size: 2rem !important; }
     }
+    
+    /* Style all Streamlit buttons to be light, clear, and pastel */
+    .stButton button {
+        background-color: #F3E8FF !important;
+        color: #6B21A8 !important;
+        border: 1px solid #E9D5FF !important;
+        font-family: 'Outfit', sans-serif !important;
+        font-weight: 600 !important;
+        border-radius: 10px !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02) !important;
+        transition: all 0.2s ease !important;
+    }
+    .stButton button:hover {
+        background-color: #E9D5FF !important;
+        color: #5B21B6 !important;
+        border-color: #D8B4FE !important;
+        box-shadow: 0 4px 8px rgba(139, 92, 246, 0.1) !important;
+    }
+    
+    /* Style the Search button to be pastel pink/rose to stand out */
+    div[data-testid="column"]:nth-child(2) button {
+        background-color: #FCE7F3 !important;
+        color: #DB2777 !important;
+        border: 1px solid #FBCFE8 !important;
+    }
+    div[data-testid="column"]:nth-child(2) button:hover {
+        background-color: #FBCFE8 !important;
+        color: #BE185D !important;
+        border-color: #F472B6 !important;
+    }
+
+    /* Style the input text box to be clean white with a dark gray font */
+    div[data-testid="stTextInput"] input {
+        background-color: #FFFFFF !important;
+        color: #1F2937 !important;
+        border: 1px solid #D1D5DB !important;
+        border-radius: 10px !important;
+        padding: 12px 16px !important;
+        font-family: 'Outfit', sans-serif !important;
+    }
+    div[data-testid="stTextInput"] input:focus {
+        border-color: #8B5CF6 !important;
+        box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.15) !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
