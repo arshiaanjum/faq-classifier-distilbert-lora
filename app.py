@@ -26,49 +26,82 @@ st.markdown("""
     /* Main container and text */
     html, body, [data-testid="stAppViewContainer"] {
         font-family: 'Outfit', sans-serif;
-        background-color: #0d0f16;
-        color: #e2e8f0;
+        background-color: #FAF9F5;
+        color: #374151;
+    }
+    
+    [data-testid="stHeader"] {
+        background: rgba(250, 249, 245, 0.9);
+    }
+    
+    /* Sidebar styling */
+    [data-testid="stSidebar"] {
+        background-color: #F3F1ED;
+        border-right: 1px solid #E4E2DE;
     }
     
     /* Titles and Headings */
     h1, h2, h3 {
         font-family: 'Space Grotesk', sans-serif;
         font-weight: 700;
-        background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        color: #4C1D95;
         text-align: center;
     }
     
-    /* Answer Card with subtle indigo neon glow */
+    /* Answer Card with soft lavender background and clean left border */
     .answer-card {
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(99, 102, 241, 0.2);
-        border-left: 5px solid #6366f1;
+        background: #F5F3FF;
+        border: 1px solid #E9E3FF;
+        border-left: 5px solid #8B5CF6;
         border-radius: 14px;
         padding: 26px;
         margin-top: 15px;
         margin-bottom: 15px;
-        box-shadow: 0 8px 30px rgba(99, 102, 241, 0.08);
-        transition: transform 0.2s;
+        box-shadow: 0 4px 20px rgba(139, 92, 246, 0.04);
+        color: #3B0764;
+    }
+    .answer-card h3 {
+        color: #4C1D95 !important;
+    }
+    .answer-card li, .answer-card ul, .answer-card b {
+        color: #3B0764 !important;
     }
     
     /* Technical Metrics Cards */
     .metric-card {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.05);
         border-radius: 8px;
         padding: 12px;
         text-align: center;
     }
+    
+    /* Metrics Color Coding */
+    .metric-blue {
+        background-color: #EFF6FF;
+        border: 1px solid #DBEAFE;
+    }
+    .metric-blue .metric-value { color: #1E40AF !important; }
+    .metric-blue .metric-label { color: #1D4ED8 !important; }
+    
+    .metric-gold {
+        background-color: #FEF3C7;
+        border: 1px solid #FDE68A;
+    }
+    .metric-gold .metric-value { color: #92400E !important; }
+    .metric-gold .metric-label { color: #B45309 !important; }
+    
+    .metric-green {
+        background-color: #DCFCE7;
+        border: 1px solid #A7F3D0;
+    }
+    .metric-green .metric-value { color: #065F46 !important; }
+    .metric-green .metric-label { color: #15803D !important; }
+    
     .metric-value {
         font-size: 1.3rem;
         font-weight: 700;
-        color: #fff;
     }
     .metric-label {
         font-size: 0.8rem;
-        color: #94a3b8;
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
@@ -87,7 +120,7 @@ st.markdown("""
     .related-title {
         font-size: 0.95rem;
         font-weight: 600;
-        color: #94a3b8;
+        color: #4B5563;
         margin-top: 20px;
         margin-bottom: 10px;
     }
@@ -101,15 +134,16 @@ st.markdown("""
         margin-bottom: 2px;
         display: flex;
         justify-content: space-between;
+        color: #4B5563;
     }
     
     /* Custom footer */
     .footer {
         text-align: center;
         padding: 60px 0 20px 0;
-        color: #475569;
+        color: #9CA3AF;
         font-size: 0.85rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.03);
+        border-top: 1px solid #E5E7EB;
         margin-top: 50px;
     }
     
@@ -125,7 +159,7 @@ st.markdown("""
 
 # ----------------- Answers Database -----------------
 ANSWERS = {
-    "Fees": """<h3 style="color:white; margin-top:0; font-family:'Space Grotesk',sans-serif;">💰 Fees & Scholarships Details</h3>
+    "Fees": """<h3 style="color:#4C1D95; margin-top:0; font-family:'Space Grotesk',sans-serif;">💰 Fees & Scholarships Details</h3>
 <ul style="line-height: 1.6; margin-bottom: 0;">
     <li><b>Tuition Fees:</b> B.Tech tuition fee is <b>1,25,000 INR per semester</b>. MBA is <b>1,50,000 INR per semester</b>.</li>
     <li><b>Payment Modes:</b> Online via NetBanking, Credit/Debit cards, UPI, or offline via Demand Draft.</li>
@@ -137,7 +171,7 @@ ANSWERS = {
         </ul>
     </li>
 </ul>""",
-    "Admissions": """<h3 style="color:white; margin-top:0; font-family:'Space Grotesk',sans-serif;">📝 Admission & Eligibility</h3>
+    "Admissions": """<h3 style="color:#4C1D95; margin-top:0; font-family:'Space Grotesk',sans-serif;">📝 Admission & Eligibility</h3>
 <ul style="line-height: 1.6; margin-bottom: 0;">
     <li><b>Application Deadline:</b> The deadline to apply online for the upcoming academic session is <b>July 31st</b>.</li>
     <li><b>Eligibility Criteria:</b>
@@ -148,28 +182,28 @@ ANSWERS = {
     </li>
     <li><b>Selection Process:</b> Standard document verification followed by cut-off based counseling slots.</li>
 </ul>""",
-    "Hostel": """<h3 style="color:white; margin-top:0; font-family:'Space Grotesk',sans-serif;">🏠 Hostel & Mess Facilities</h3>
+    "Hostel": """<h3 style="color:#4C1D95; margin-top:0; font-family:'Space Grotesk',sans-serif;">🏠 Hostel & Mess Facilities</h3>
 <ul style="line-height: 1.6; margin-bottom: 0;">
     <li><b>Accommodation:</b> Options for single, double, and triple sharing rooms (AC and Non-AC variants).</li>
     <li><b>Hostel Fees:</b> Starts at <b>85,000 INR per year</b> (includes room allotment, electricity, and 3 meals/day in the mess).</li>
     <li><b>Amenities:</b> High-speed Wi-Fi, laundry facilities, gym access, and sports equipment.</li>
     <li><b>Curfew & Rules:</b> Curfew is strictly <b>9:30 PM</b> for security reasons. Visitors are only allowed in the lobby.</li>
 </ul>""",
-    "Exams": """<h3 style="color:white; margin-top:0; font-family:'Space Grotesk',sans-serif;">📅 Exams, Results & Backlogs</h3>
+    "Exams": """<h3 style="color:#4C1D95; margin-top:0; font-family:'Space Grotesk',sans-serif;">📅 Exams, Results & Backlogs</h3>
 <ul style="line-height: 1.6; margin-bottom: 0;">
     <li><b>Timetable:</b> Semester-end theory examinations start on <b>December 5th</b>. Date sheets are published on the portal 15 days prior.</li>
     <li><b>Hall Tickets:</b> Downloadable from your student dashboard 1 week before exams.</li>
     <li><b>Assessments:</b> Mid-term internal exams count for 30% of the total grade; end-sem count for 70%.</li>
     <li><b>Backlogs & Revaluation:</b> Backlog clearing exams are held during summer breaks. Paper re-checks can be filed within 10 days of results.</li>
 </ul>""",
-    "Placement": """<h3 style="color:white; margin-top:0; font-family:'Space Grotesk',sans-serif;">💼 Campus Placements & Internships</h3>
+    "Placement": """<h3 style="color:#4C1D95; margin-top:0; font-family:'Space Grotesk',sans-serif;">💼 Campus Placements & Internships</h3>
 <ul style="line-height: 1.6; margin-bottom: 0;">
     <li><b>Average Package:</b> The average package for computer science placements is <b>8.5 LPA</b>. The highest package reached <b>44 LPA</b> this year.</li>
     <li><b>Recruitment Partners:</b> Amazon, Microsoft, Adobe, Deloitte, TCS, Infosys, and 120+ other companies.</li>
     <li><b>Placement Success:</b> Over <b>92%</b> placement rate for eligible students in the last academic year.</li>
-    <li><b>Internships:</b> The Placement Cell organizes 3rd-year summer internship drives with average stipends of <b>25,000 INR/month</b>.</li>
+    <li><b>Internships:</b> the Placement Cell organizes 3rd-year summer internship drives with average stipends of <b>25,000 INR/month</b>.</li>
 </ul>""",
-    "Other": """<h3 style="color:white; margin-top:0; font-family:'Space Grotesk',sans-serif;">🌐 Campus Life & General Help</h3>
+    "Other": """<h3 style="color:#4C1D95; margin-top:0; font-family:'Space Grotesk',sans-serif;">🌐 Campus Life & General Help</h3>
 <ul style="line-height: 1.6; margin-bottom: 0;">
     <li><b>Library Timings:</b> Open <b>8:00 AM to 10:00 PM</b> on weekdays, and <b>9:00 AM to 5:00 PM</b> on weekends.</li>
     <li><b>Wi-Fi Access:</b> Register your laptop's MAC address at the IT Department block.</li>
@@ -363,21 +397,21 @@ Category: <b>{predicted_cat}</b>
             col_perf1, col_perf2, col_perf3 = st.columns(3)
             with col_perf1:
                 st.markdown(f"""
-                <div class="metric-card">
+                <div class="metric-card metric-blue">
                     <div class="metric-value">{result['confidence'] * 100:.1f}%</div>
                     <div class="metric-label">Confidence</div>
                 </div>
                 """, unsafe_allow_html=True)
             with col_perf2:
                 st.markdown(f"""
-                <div class="metric-card">
+                <div class="metric-card metric-gold">
                     <div class="metric-value">{result['latency_ms']:.2f} ms</div>
                     <div class="metric-label">Latency</div>
                 </div>
                 """, unsafe_allow_html=True)
             with col_perf3:
                 st.markdown(f"""
-                <div class="metric-card">
+                <div class="metric-card metric-green">
                     <div class="metric-value">PEFT-LoRA</div>
                     <div class="metric-label">Model Type</div>
                 </div>
