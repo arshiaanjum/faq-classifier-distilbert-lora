@@ -403,21 +403,6 @@ Category: <b>{predicted_cat}</b>
 {answer_text}
 </div>""", unsafe_allow_html=True)
         
-        # Action Buttons (👍 / 👎 / Copy)
-        col_fb1, col_fb2, col_copy = st.columns([1, 1, 4])
-        with col_fb1:
-            if st.button("👍 Useful", key="like_btn"):
-                st.toast("Thank you for your feedback!", icon="💖")
-        with col_fb2:
-            if st.button("👎 Not Useful", key="dislike_btn"):
-                st.toast("Feedback recorded. We will improve this response.", icon="📝")
-        with col_copy:
-            # Render plain text formatted code block for one-click copy button
-            plain_answer = answer_text.replace("<b>", "").replace("</b>", "").replace("<u>", "").replace("</u>", "").replace("<h3>", "### ").replace("</h3>", "\n").replace("<li>", "* ").replace("</li>", "\n").replace("<ul>", "").replace("</ul>", "")
-            plain_answer = re.sub('<[^<]+?>', '', plain_answer).strip()
-            with st.expander("📋 Copy Plain Text Answer"):
-                st.code(plain_answer, language="markdown")
-                
         # Related Questions Section
         related_qs = RELATED_QUESTIONS.get(predicted_cat, [])
         if related_qs:
