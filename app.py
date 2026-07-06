@@ -88,51 +88,57 @@ st.markdown("""
 
 # ----------------- Answers Database -----------------
 ANSWERS = {
-    "Fees": """### 💰 Fees & Scholarships Details
-
-* **Tuition Fees:** B.Tech tuition fee is **1,25,000 INR per semester**. MBA is **1,50,000 INR per semester**.
-* **Payment Modes:** Online via NetBanking, Credit/Debit cards, UPI, or offline via Demand Draft.
-* **Late Payments:** A penalty fine of **500 INR** applies if submitted after the semester deadline.
-* **Scholarships:**
-  * **Merit-Based:** Up to 50% tuition fee waiver for academic performance (>90% marks).
-  * **Need-Based:** Financial aid for economically weaker sections (EWS) upon document submission.
-""",
-    "Admissions": """### 📝 Admission & Eligibility
-
-* **Application Deadline:** The deadline to apply online for the upcoming academic session is **July 31st**.
-* **Eligibility Criteria:**
-  * **B.Tech:** Minimum 60% aggregate in 12th standard (Physics, Chemistry, Mathematics).
-  * **MBA / MCA:** Graduation with >50% marks + qualifying score in CAT/MAT entrance exams.
-* **Selection Process:** Standard document verification followed by cut-off based counseling slots.
-""",
-    "Hostel": """### 🏠 Hostel & Mess Facilities
-
-* **Accommodation:** Options for single, double, and triple sharing rooms (AC and Non-AC variants).
-* **Hostel Fees:** Starts at **85,000 INR per year** (includes room allotment, electricity, and 3 meals/day in the mess).
-* **Amenities:** High-speed Wi-Fi, laundry facilities, gym access, and sports equipment.
-* **Curfew & Rules:** Curfew is strictly **9:30 PM** for security reasons. Visitors are only allowed in the lobby.
-""",
-    "Exams": """### 📅 Exams, Results & Backlogs
-
-* **Timetable:** Semester-end theory examinations start on **December 5th**. Date sheets are published on the portal 15 days prior.
-* **Hall Tickets:** Downloadable from your student dashboard 1 week before exams.
-* **Assessments:** Mid-term internal exams count for 30% of the total grade; end-sem count for 70%.
-* **Backlogs & Revaluation:** Backlog clearing exams are held during summer breaks. Paper re-checks can be filed within 10 days of results.
-""",
-    "Placement": """### 💼 Campus Placements & Internships
-
-* **Average Package:** The average package for computer science placements is **8.5 LPA**. The highest package reached **44 LPA** this year.
-* **Recruitment Partners:** Amazon, Microsoft, Adobe, Deloitte, TCS, Infosys, and 120+ other companies.
-* **Placement Success:** Over **92%** placement rate for eligible students in the last academic year.
-* **Internships:** The Placement Cell organizes 3rd-year summer internship drives with average stipends of **25,000 INR/month**.
-""",
-    "Other": """### 🌐 Campus Life & General Help
-
-* **Library Timings:** Open **8:00 AM to 10:00 PM** on weekdays, and **9:00 AM to 5:00 PM** on weekends.
-* **Wi-Fi Access:** Register your laptop's MAC address at the IT Department block.
-* **Medical Care:** A 24/7 medical clinic with an ambulance and general practitioners is situated near the hostel block.
-* **Student Clubs:** 25+ clubs across robotics, drama, sports, and entrepreneurship.
-"""
+    "Fees": """<h3 style="color:white; margin-top:0; font-family:'Space Grotesk',sans-serif;">💰 Fees & Scholarships Details</h3>
+<ul style="line-height: 1.6; margin-bottom: 0;">
+    <li><b>Tuition Fees:</b> B.Tech tuition fee is <b>1,25,000 INR per semester</b>. MBA is <b>1,50,000 INR per semester</b>.</li>
+    <li><b>Payment Modes:</b> Online via NetBanking, Credit/Debit cards, UPI, or offline via Demand Draft.</li>
+    <li><b>Late Payments:</b> A penalty fine of <b>500 INR</b> applies if submitted after the semester deadline.</li>
+    <li><b>Scholarships:</b>
+        <ul>
+            <li><b>Merit-Based:</b> Up to 50% tuition fee waiver for academic performance (&gt;90% marks).</li>
+            <li><b>Need-Based:</b> Financial aid for economically weaker sections (EWS) upon document submission.</li>
+        </ul>
+    </li>
+</ul>""",
+    "Admissions": """<h3 style="color:white; margin-top:0; font-family:'Space Grotesk',sans-serif;">📝 Admission & Eligibility</h3>
+<ul style="line-height: 1.6; margin-bottom: 0;">
+    <li><b>Application Deadline:</b> The deadline to apply online for the upcoming academic session is <b>July 31st</b>.</li>
+    <li><b>Eligibility Criteria:</b>
+        <ul>
+            <li><b>B.Tech:</b> Minimum 60% aggregate in 12th standard (Physics, Chemistry, Mathematics).</li>
+            <li><b>MBA / MCA:</b> Graduation with &gt;50% marks + qualifying score in CAT/MAT entrance exams.</li>
+        </ul>
+    </li>
+    <li><b>Selection Process:</b> Standard document verification followed by cut-off based counseling slots.</li>
+</ul>""",
+    "Hostel": """<h3 style="color:white; margin-top:0; font-family:'Space Grotesk',sans-serif;">🏠 Hostel & Mess Facilities</h3>
+<ul style="line-height: 1.6; margin-bottom: 0;">
+    <li><b>Accommodation:</b> Options for single, double, and triple sharing rooms (AC and Non-AC variants).</li>
+    <li><b>Hostel Fees:</b> Starts at <b>85,000 INR per year</b> (includes room allotment, electricity, and 3 meals/day in the mess).</li>
+    <li><b>Amenities:</b> High-speed Wi-Fi, laundry facilities, gym access, and sports equipment.</li>
+    <li><b>Curfew & Rules:</b> Curfew is strictly <b>9:30 PM</b> for security reasons. Visitors are only allowed in the lobby.</li>
+</ul>""",
+    "Exams": """<h3 style="color:white; margin-top:0; font-family:'Space Grotesk',sans-serif;">📅 Exams, Results & Backlogs</h3>
+<ul style="line-height: 1.6; margin-bottom: 0;">
+    <li><b>Timetable:</b> Semester-end theory examinations start on <b>December 5th</b>. Date sheets are published on the portal 15 days prior.</li>
+    <li><b>Hall Tickets:</b> Downloadable from your student dashboard 1 week before exams.</li>
+    <li><b>Assessments:</b> Mid-term internal exams count for 30% of the total grade; end-sem count for 70%.</li>
+    <li><b>Backlogs & Revaluation:</b> Backlog clearing exams are held during summer breaks. Paper re-checks can be filed within 10 days of results.</li>
+</ul>""",
+    "Placement": """<h3 style="color:white; margin-top:0; font-family:'Space Grotesk',sans-serif;">💼 Campus Placements & Internships</h3>
+<ul style="line-height: 1.6; margin-bottom: 0;">
+    <li><b>Average Package:</b> The average package for computer science placements is <b>8.5 LPA</b>. The highest package reached <b>44 LPA</b> this year.</li>
+    <li><b>Recruitment Partners:</b> Amazon, Microsoft, Adobe, Deloitte, TCS, Infosys, and 120+ other companies.</li>
+    <li><b>Placement Success:</b> Over <b>92%</b> placement rate for eligible students in the last academic year.</li>
+    <li><b>Internships:</b> The Placement Cell organizes 3rd-year summer internship drives with average stipends of <b>25,000 INR/month</b>.</li>
+</ul>""",
+    "Other": """<h3 style="color:white; margin-top:0; font-family:'Space Grotesk',sans-serif;">🌐 Campus Life & General Help</h3>
+<ul style="line-height: 1.6; margin-bottom: 0;">
+    <li><b>Library Timings:</b> Open <b>8:00 AM to 10:00 PM</b> on weekdays, and <b>9:00 AM to 5:00 PM</b> on weekends.</li>
+    <li><b>Wi-Fi Access:</b> Register your laptop's MAC address at the IT Department block.</li>
+    <li><b>Medical Care:</b> A 24/7 medical clinic with an ambulance and general practitioners is situated near the hostel block.</li>
+    <li><b>Student Clubs:</b> 25+ clubs across robotics, drama, sports, and entrepreneurship.</li>
+</ul>"""
 }
 
 # ----------------- Load Model Cache -----------------
