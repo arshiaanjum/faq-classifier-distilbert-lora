@@ -1,6 +1,7 @@
 import streamlit as st
 import time
 import os
+import re
 from inference import FAQClassifier
 
 # Set page title and configuration
@@ -11,7 +12,13 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Custom premium styling (Vibrant colors, dark mode look, clean fonts, simplified UI)
+# Initialize Session States
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
+if "user_input" not in st.session_state:
+    st.session_state.user_input = ""
+
+# Custom premium styling (Vibrant colors, neon glow cards, mobile responsive)
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&display=swap');
@@ -33,19 +40,20 @@ st.markdown("""
         text-align: center;
     }
     
-    /* Answer Card */
+    /* Answer Card with subtle indigo neon glow */
     .answer-card {
         background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-left: 5px solid #a855f7;
-        border-radius: 12px;
-        padding: 24px;
-        margin-top: 25px;
-        margin-bottom: 25px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        border-left: 5px solid #6366f1;
+        border-radius: 14px;
+        padding: 26px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 8px 30px rgba(99, 102, 241, 0.08);
+        transition: transform 0.2s;
     }
     
-    /* Metric Cards */
+    /* Technical Metrics Cards */
     .metric-card {
         background: rgba(255, 255, 255, 0.02);
         border: 1px solid rgba(255, 255, 255, 0.05);
@@ -54,7 +62,7 @@ st.markdown("""
         text-align: center;
     }
     .metric-value {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
         font-weight: 700;
         color: #fff;
     }
@@ -63,6 +71,25 @@ st.markdown("""
         color: #94a3b8;
         text-transform: uppercase;
         letter-spacing: 0.05em;
+    }
+    
+    /* Confidence Badge */
+    .conf-badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+    
+    /* Related Questions Pills */
+    .related-title {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #94a3b8;
+        margin-top: 20px;
+        margin-bottom: 10px;
     }
     
     /* Probabilities list */
@@ -76,12 +103,22 @@ st.markdown("""
         justify-content: space-between;
     }
     
-    /* Footer */
+    /* Custom footer */
     .footer {
         text-align: center;
-        padding: 50px 0 20px 0;
-        color: #64748b;
+        padding: 60px 0 20px 0;
+        color: #475569;
         font-size: 0.85rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.03);
+        margin-top: 50px;
+    }
+    
+    /* Mobile responsiveness queries */
+    @media (max-width: 640px) {
+        .metric-value { font-size: 1.1rem; }
+        .metric-label { font-size: 0.7rem; }
+        .answer-card { padding: 18px; }
+        h1 { font-size: 2rem !important; }
     }
 </style>
 """, unsafe_allow_html=True)
@@ -141,6 +178,39 @@ ANSWERS = {
 </ul>"""
 }
 
+RELATED_QUESTIONS = {
+    "Fees": [
+        "What are the criteria for merit-based scholarships?",
+        "Can I pay the fees in installments?",
+        "How do I request a refund if I withdraw?"
+    ],
+    "Admissions": [
+        "What cut-off rank is required for B.Tech admission?",
+        "Which entrance exams are accepted for MBA?",
+        "What documents are needed for admission registration?"
+    ],
+    "Hostel": [
+        "What amenities are provided in hostal double sharing?",
+        "Is hostel accommodation mandatory for outstation students?",
+        "Whom do I contact for hostel room allotment?"
+    ],
+    "Exams": [
+        "How do I apply for revaluation of exam marks?",
+        "What happens if I miss an exam due to medical reasons?",
+        "What is the GPA scale structure?"
+    ],
+    "Placement": [
+        "What companies visit for CSE placement drives?",
+        "Does the college offer placement training/mock interviews?",
+        "Are internship opportunities paid?"
+    ],
+    "Other": [
+        "How do I register for campus Wi-Fi?",
+        "What are the library hours on Sundays?",
+        "Are there gym facilities or sports courts?"
+    ]
+}
+
 # ----------------- Load Model Cache -----------------
 @st.cache_resource
 def get_classifier():
@@ -151,7 +221,28 @@ def get_classifier():
 
 classifier = get_classifier()
 
-# Header
+# ----------------- Sidebar (Chat History) -----------------
+with st.sidebar:
+    st.image("https://img.icons8.com/nolan/64/chat.png", width=50)
+    st.markdown("### 📜 Search History")
+    
+    if not st.session_state.chat_history:
+        st.write("Your recent questions will appear here.")
+    else:
+        for idx, item in enumerate(reversed(st.session_state.chat_history)):
+            # Show truncated query button
+            lbl = item["query"]
+            short_lbl = lbl[:28] + "..." if len(lbl) > 28 else lbl
+            if st.button(f"🔍 {short_lbl}", key=f"hist_{idx}", use_container_width=True):
+                st.session_state.user_input = lbl
+                st.rerun()
+                
+        st.markdown("<br>", unsafe_allow_html=True)
+        if st.button("🧹 Clear History", use_container_width=True):
+            st.session_state.chat_history = []
+            st.rerun()
+
+# ----------------- Main App UI Layout -----------------
 st.title("🎓 College FAQ Assistant")
 st.write("Ask a question about fees, admissions, hostel, exams, or placements to get an instant answer.")
 
@@ -159,17 +250,14 @@ if classifier is None:
     st.error("🚨 **Model checkpoints not found!** Run training first.")
     st.stop()
 
-# Examples Row (Simplified Layout)
-st.write("**Frequently Asked Questions:**")
+# FAQ Examples Row
+st.write("**Quick Example Searches:**")
 cols = st.columns(3)
 examples = [
-    "What is the average package for computer science placements?",
+    "what is the average package for computer science placements",
     "What is the total fee structure for B.Tech?",
     "Is curfew time different for girls and boys hostel?"
 ]
-
-if "user_input" not in st.session_state:
-    st.session_state.user_input = ""
 
 if cols[0].button("💼 Average Package?", use_container_width=True):
     st.session_state.user_input = examples[0]
@@ -178,32 +266,100 @@ if cols[1].button("💰 B.Tech Fees?", use_container_width=True):
 if cols[2].button("🏠 Hostel Curfew?", use_container_width=True):
     st.session_state.user_input = examples[2]
 
-# Input area
-user_query = st.text_input(
-    "Enter your question:",
-    value=st.session_state.user_input,
-    placeholder="Type your question here (e.g. what are the document requirements for admission?)...",
-    label_visibility="collapsed"
-)
+# Search Bar Area with Search button next to it
+col_input, col_btn = st.columns([5, 1])
+with col_input:
+    user_query = st.text_input(
+        "Enter your question:",
+        value=st.session_state.user_input,
+        placeholder="Type your question here (e.g. what are the document requirements for admission?)...",
+        label_visibility="collapsed"
+    )
+with col_btn:
+    search_clicked = st.button("🔍 Search", use_container_width=True)
 
-# Run classification on query input
-if user_query:
+# Run classification on query submission or button click
+if user_query or search_clicked:
     with st.spinner("Finding answer..."):
         # Make prediction
         result = classifier.predict(user_query)
         predicted_cat = result['predicted_label']
+        conf = result['confidence']
         
-        # Display the actual answer card (main priority)
+        # Save to chat history if not already the last one
+        if not st.session_state.chat_history or st.session_state.chat_history[-1]["query"] != user_query:
+            st.session_state.chat_history.append({
+                "query": user_query,
+                "category": predicted_cat,
+                "confidence": conf
+            })
+            # Limit history to 8 items
+            if len(st.session_state.chat_history) > 8:
+                st.session_state.chat_history.pop(0)
+        
+        # Determine confidence colors and labels
+        if conf >= 0.8:
+            badge_bg = "rgba(16, 185, 129, 0.15)"
+            badge_border = "#10b981"
+            badge_lbl = "High Confidence"
+        elif conf >= 0.5:
+            badge_bg = "rgba(245, 158, 11, 0.15)"
+            badge_border = "#f59e0b"
+            badge_lbl = "Medium Confidence"
+        else:
+            badge_bg = "rgba(239, 68, 68, 0.15)"
+            badge_border = "#ef4444"
+            badge_lbl = "Low Confidence"
+            
+        # Display answer card
         answer_text = ANSWERS.get(predicted_cat, "No information available for this category.")
         st.markdown(f"""
         <div class="answer-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                <span class="conf-badge" style="background: {badge_bg}; border: 1px solid {badge_border}; color: {badge_border};">
+                    {badge_lbl} ({conf * 100:.1f}%)
+                </span>
+                <span style="font-size: 0.85rem; color: #64748b; margin-bottom: 15px;">
+                    Category: <b>{predicted_cat}</b>
+                </span>
+            </div>
             {answer_text}
         </div>
         """, unsafe_allow_html=True)
         
-        # Collapse all the technical and model performance metrics to reduce clutter
+        # Action Buttons (👍 / 👎 / Copy)
+        col_fb1, col_fb2, col_copy = st.columns([1, 1, 4])
+        with col_fb1:
+            if st.button("👍 Useful", key="like_btn"):
+                st.toast("Thank you for your feedback!", icon="💖")
+        with col_fb2:
+            if st.button("👎 Not Useful", key="dislike_btn"):
+                st.toast("Feedback recorded. We will improve this response.", icon="📝")
+        with col_copy:
+            # Render plain text formatted code block for one-click copy button
+            plain_answer = answer_text.replace("<b>", "").replace("</b>", "").replace("<u>", "").replace("</u>", "").replace("<h3>", "### ").replace("</h3>", "\n").replace("<li>", "* ").replace("</li>", "\n").replace("<ul>", "").replace("</ul>", "")
+            plain_answer = re.sub('<[^<]+?>', '', plain_answer).strip()
+            with st.expander("📋 Copy Plain Text Answer"):
+                st.code(plain_answer, language="markdown")
+                
+        # Related Questions Section
+        related_qs = RELATED_QUESTIONS.get(predicted_cat, [])
+        if related_qs:
+            st.markdown('<div class="related-title">Related Questions:</div>', unsafe_allow_html=True)
+            col_rel1, col_rel2, col_rel3 = st.columns(3)
+            if col_rel1.button(related_qs[0], use_container_width=True, key="rel1"):
+                st.session_state.user_input = related_qs[0]
+                st.rerun()
+            if col_rel2.button(related_qs[1], use_container_width=True, key="rel2"):
+                st.session_state.user_input = related_qs[1]
+                st.rerun()
+            if col_rel3.button(related_qs[2], use_container_width=True, key="rel3"):
+                st.session_state.user_input = related_qs[2]
+                st.rerun()
+        
+        # Collapsible technical details
         with st.expander("🛠️ Show AI Model Technical Details"):
-            st.markdown(f"**Predicted Category:** `{predicted_cat}`")
+            st.markdown(f"**Predicted Intent:** `{predicted_cat}`")
             
             # Technical Metrics Columns
             col_perf1, col_perf2, col_perf3 = st.columns(3)
