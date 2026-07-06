@@ -313,19 +313,17 @@ if user_query or search_clicked:
             
         # Display answer card
         answer_text = ANSWERS.get(predicted_cat, "No information available for this category.")
-        st.markdown(f"""
-        <div class="answer-card">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-                <span class="conf-badge" style="background: {badge_bg}; border: 1px solid {badge_border}; color: {badge_border};">
-                    {badge_lbl} ({conf * 100:.1f}%)
-                </span>
-                <span style="font-size: 0.85rem; color: #64748b; margin-bottom: 15px;">
-                    Category: <b>{predicted_cat}</b>
-                </span>
-            </div>
-            {answer_text}
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(f"""<div class="answer-card">
+<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+<span class="conf-badge" style="background: {badge_bg}; border: 1px solid {badge_border}; color: {badge_border};">
+{badge_lbl} ({conf * 100:.1f}%)
+</span>
+<span style="font-size: 0.85rem; color: #64748b; margin-bottom: 15px;">
+Category: <b>{predicted_cat}</b>
+</span>
+</div>
+{answer_text}
+</div>""", unsafe_allow_html=True)
         
         # Action Buttons (👍 / 👎 / Copy)
         col_fb1, col_fb2, col_copy = st.columns([1, 1, 4])
